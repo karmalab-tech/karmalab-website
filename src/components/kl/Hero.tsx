@@ -11,7 +11,10 @@ import {
   IconArrowRight,
 } from './Icons';
 
-const REEL_SRC = 'https://videos.pexels.com/video-files/7794287/7794287-hd_1920_1080_25fps.mp4';
+const REEL_PREVIEW_SRC = 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/karmalab_video_start.mp4';
+const REEL_DESKTOP_SRC =
+  'https://karmalab-cdn.s3.us-east-1.amazonaws.com/karmalab_video_desktop.mp4';
+const REEL_MOBILE_SRC = 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/karmalab_video_mobile.mp4';
 
 interface Tweaks {
   tagline1: string;
@@ -27,15 +30,95 @@ interface Tweaks {
 
 interface ReelFixedProps {
   tweaks: Tweaks;
+  unlocked: boolean;
+  onUnlock: () => void;
+  onRelock?: () => void;
+  onRegisterUnlock?: (fn: () => void) => void;
 }
 
-export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
+export const ReelFixed = ({
+  tweaks,
+  unlocked,
+  onUnlock,
+  onRelock,
+  onRegisterUnlock,
+}: ReelFixedProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoSrc, setVideoSrc] = useState(REEL_PREVIEW_SRC);
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(true);
   const inactivityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Always-fresh unlock handler — called synchronously in user-gesture context
+  const handleUnlockRef = useRef<() => void>(() => {});
+  const handleUnlock = () => {
+    if (unlocked) return;
+    const fullSrc = window.innerWidth < 768 ? REEL_MOBILE_SRC : REEL_DESKTOP_SRC;
+    const v = videoRef.current;
+    if (v) {
+      v.src = fullSrc;
+      v.load();
+      v.muted = false;
+      v.play().catch(() => {});
+      setPlaying(true);
+      // iOS: enter native fullscreen player in the user-gesture context
+      if ('webkitEnterFullscreen' in v) {
+        (v as any).webkitEnterFullscreen();
+      }
+    }
+    setVideoSrc(fullSrc);
+    setMuted(false);
+    window.scrollTo({
+      top: window.innerHeight * (tweaks.heroHeightVh / 100),
+      behavior: 'smooth',
+    });
+    onUnlock();
+  };
+  handleUnlockRef.current = handleUnlock;
+
+  // Expose handleUnlock to parent (for HeroBlock)
+  useEffect(() => {
+    onRegisterUnlock?.(() => handleUnlockRef.current());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // When full video ends, reset back to preview loop
+  const onRelockRef = useRef(onRelock);
+  useEffect(() => {
+    onRelockRef.current = onRelock;
+  });
+  useEffect(() => {
+    if (!unlocked) return;
+    const v = videoRef.current;
+    if (!v) return;
+    const onEnded = () => {
+      v.src = REEL_PREVIEW_SRC;
+      v.muted = true;
+      v.load();
+      v.play().catch(() => {});
+      setVideoSrc(REEL_PREVIEW_SRC);
+      setMuted(true);
+      setPlaying(true);
+      onRelockRef.current?.();
+    };
+    v.addEventListener('ended', onEnded);
+    return () => v.removeEventListener('ended', onEnded);
+  }, [unlocked]);
+
+  // Volume follows scroll position when unlocked
+  useEffect(() => {
+    if (!unlocked) return;
+    const v = videoRef.current;
+    if (!v) return;
+    const vol =
+      progress >= 0.5 && progress <= 2.0
+        ? Math.min(1, Math.max(0, (progress - 0.5) / 0.25)) *
+          Math.min(1, Math.max(0, (1.88 - progress) / 0.16))
+        : 0;
+    v.volume = vol;
+  }, [unlocked, progress]);
 
   useEffect(() => {
     const resetTimer = () => {
@@ -118,11 +201,11 @@ export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
   }
 
   const scrollControlsOpacity =
-    progress >= 0.92 && progress <= 2.0
-      ? Math.min(1, Math.max(0, (progress - 0.92) / 0.22)) *
+    progress >= 0.5 && progress <= 2.0
+      ? Math.min(1, Math.max(0, (progress - 0.5) / 0.25)) *
         Math.min(1, Math.max(0, (1.88 - progress) / 0.16))
       : 0;
-  const controlsOpacity = scrollControlsOpacity * (active ? 1 : 0);
+  const controlsOpacity = unlocked ? scrollControlsOpacity * (active ? 1 : 0) : 0;
 
   const grainSvg = encodeURIComponent(
     `<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(#n)' opacity='0.35'/></svg>`,
@@ -133,15 +216,16 @@ export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
       <div aria-hidden className="fixed inset-0 z-0 pointer-events-none bg-kl-black">
         <video
           ref={videoRef}
-          src={REEL_SRC}
+          src={videoSrc}
           autoPlay
-          loop
+          loop={!unlocked}
           muted={muted}
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
+          preload="metadata"
           style={{
             opacity,
-            filter: `blur(${blur}px) saturate(${0.6 + 0.4 * Math.min(1, progress)})`,
+            filter: `blur(${blur}px)`,
             transition: 'filter 120ms linear',
           }}
         />
@@ -150,7 +234,8 @@ export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
           style={{
             background: `radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 70%, rgba(0,0,0,.9) 100%),
                        linear-gradient(180deg, rgba(0,0,0,${0.35 + 0.15 * (1 - Math.min(1, progress))}) 0%, rgba(0,0,0,.2) 40%, rgba(0,0,0,.5) 100%)`,
-            opacity,
+            opacity: opacity * (unlocked ? 0 : 1),
+            transition: 'opacity 800ms ease',
           }}
         />
         {tweaks.grainOn && (
@@ -159,6 +244,30 @@ export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
             style={{ backgroundImage: `url("data:image/svg+xml;utf8,${grainSvg}")` }}
           />
         )}
+      </div>
+
+      {/* Watch video overlay — visible until unlocked */}
+      <div
+        className="fixed inset-0 flex items-center justify-center"
+        style={{
+          zIndex: 1,
+          pointerEvents: !unlocked && scrollControlsOpacity > 0.1 ? 'auto' : 'none',
+          cursor: !unlocked && scrollControlsOpacity > 0.1 ? 'pointer' : 'default',
+          opacity: unlocked ? 0 : scrollControlsOpacity,
+          transition: 'opacity 500ms ease',
+        }}
+        onClick={handleUnlock}
+      >
+        <KLButton
+          variant="primary"
+          size="lg"
+          accent="lime"
+          onClick={handleUnlock}
+          style={{ pointerEvents: unlocked ? 'none' : 'auto' }}
+        >
+          <IconPlay size={18} />
+          Watch video
+        </KLButton>
       </div>
 
       {/* Reel controls */}
@@ -212,10 +321,11 @@ export const ReelFixed = ({ tweaks }: ReelFixedProps) => {
 
 interface HeroBlockProps {
   onContact: () => void;
+  onUnlock: () => void;
   tweaks: Tweaks;
 }
 
-export const HeroBlock = ({ onContact, tweaks }: HeroBlockProps) => {
+export const HeroBlock = ({ onContact, onUnlock, tweaks }: HeroBlockProps) => {
   const [hp, setHp] = useState(0);
 
   useEffect(() => {
@@ -273,8 +383,9 @@ export const HeroBlock = ({ onContact, tweaks }: HeroBlockProps) => {
               size="lg"
               accent={tweaks.accentDominance === 'pink' ? 'pink' : 'lime'}
               onClick={() => {
+                onUnlock();
                 window.scrollTo({
-                  top: window.innerHeight * (tweaks.heroHeightVh / 100) * 0.5,
+                  top: window.innerHeight * (tweaks.heroHeightVh / 100),
                   behavior: 'smooth',
                 });
               }}

@@ -126,6 +126,7 @@ const VideoModal = ({ src, client, title, onClose }: VideoModalProps) => {
             src={src ?? undefined}
             autoPlay
             playsInline
+            loop
             className="absolute inset-0 w-full h-full block"
           />
           {client || title ? (

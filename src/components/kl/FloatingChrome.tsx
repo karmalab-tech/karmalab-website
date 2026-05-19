@@ -8,6 +8,7 @@ interface FloatingChromeProps {
   onOpenContact: () => void;
   scrolled: boolean;
   startHidden?: boolean;
+  hidden?: boolean;
 }
 
 export const FloatingChrome = ({
@@ -15,6 +16,7 @@ export const FloatingChrome = ({
   onOpenContact,
   scrolled,
   startHidden = false,
+  hidden = false,
 }: FloatingChromeProps) => {
   const [hovered, setHovered] = useState(false);
   return (
@@ -24,8 +26,9 @@ export const FloatingChrome = ({
       className="fixed inset-x-0 top-0 z-40 flex justify-between items-center"
       style={{
         padding: '24px clamp(20px, 3vw, 36px)',
-        transition: 'background 300ms ease, opacity 300ms ease',
-        opacity: startHidden && !scrolled && !hovered ? 0 : 1,
+        transition: 'background 300ms ease, opacity 600ms ease',
+        opacity: hidden ? 0 : startHidden && !scrolled && !hovered ? 0 : 1,
+        pointerEvents: hidden ? 'none' : 'auto',
         background: scrolled
           ? 'linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,0))'
           : 'transparent',

@@ -21,13 +21,13 @@ export const SectionCTA = ({ onContact }: SectionCTAProps) => (
 
       <div className="flex-1 max-md:max-w-full">
         <div
-          className="font-sans font-light text-kl-bone leading-tight tracking-tighter"
+          className="font-sans font-light text-kl-bone leading-tight tracking-tighter max-md:text-center"
           style={{ fontSize: 'clamp(48px, 8vw, 96px)' }}
         >
           Bring your <span className="text-kl-pink">ideas</span>
         </div>
 
-        <div className="mt-16 flex gap-4 items-center flex-wrap max-md:flex-col max-md:items-start max-md:gap-2.5">
+        <div className="mt-16 flex gap-4 items-center flex-wrap max-md:flex-col max-md:items-center max-md:gap-2.5">
           <KLButton size="lg" onClick={onContact}>
             Contact us <IconArrowUpRight size={16} />
           </KLButton>

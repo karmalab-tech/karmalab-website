@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { KLSectionNumber } from '../KLSectionNumber';
 import { ParallaxImage } from '../ParallaxImage';
 import { KLButton } from '../KLButton';
@@ -46,6 +46,59 @@ const ParallaxVideo = ({
   );
 };
 
+const COPY: {
+  n: string;
+  label: string;
+  paragraphs: { className?: string; content: ReactNode }[];
+}[] = [
+  {
+    n: '01',
+    label: 'The problem',
+    paragraphs: [
+      {
+        className: 'text-kl-bone pr-28 sm:pr-0',
+        content: (
+          <>
+            Most projects start from{' '}
+            <span className="text-kl-pink">tools instead of structure</span>.
+          </>
+        ),
+      },
+      {
+        className: 'text-kl-bone pr-16 sm:pr-0',
+        content: <>So things move fast but they don't always hold.</>,
+      },
+      {
+        className: 'text-kl-fog',
+        content: <>It all comes down to how you build it.</>,
+      },
+    ],
+  },
+  {
+    n: '02',
+    label: 'What we do',
+    paragraphs: [
+      {
+        className: 'text-kl-bone',
+        content: (
+          <>
+            You come to us when something needs to take shape. <br />
+            <span className="text-kl-pink">With just an idea.</span>
+          </>
+        ),
+      },
+      {
+        className: 'text-kl-fog',
+        content: <>We design the hybrid pipeline that makes it work.</>,
+      },
+      {
+        className: 'text-kl-fog',
+        content: <>And you get to keep it.</>,
+      },
+    ],
+  },
+];
+
 export const SectionWhatWeDo = () => (
   <section
     id="what-we-do"
@@ -70,31 +123,20 @@ export const SectionWhatWeDo = () => (
         />
       </div>
 
-      <div className="mb-6 sm:mb-12 relative z-1">
-        <KLSectionNumber n="01" label="The problem" />
-      </div>
-
-      <div className="mb-8 sm:mb-16 relative z-1 space-y-3 text-lg sm:text-2xl font-sans font-light leading-relaxed">
-        <p className="text-kl-bone pr-28 sm:pr-0">
-          Most projects start from <span className="text-kl-pink">tools instead of structure</span>.
-        </p>
-        <p className="text-kl-bone pr-16 sm:pr-0">
-          So things move fast but they don't always hold.
-        </p>
-        <p className="text-kl-fog">It all comes down to how you build it.</p>
-      </div>
-
-      <div className="mb-6 sm:mb-12 relative z-1">
-        <KLSectionNumber n="02" label="What we do" />
-      </div>
-
-      <div className="mb-8 sm:mb-16 relative z-1 space-y-3 text-lg sm:text-2xl font-sans font-light leading-relaxed">
-        <p className="text-kl-bone">
-          You come to us when something needs to take shape. <br />
-          <span className="text-kl-pink">With just an idea.</span>
-        </p>
-        <p className="text-kl-fog">We design the hybrid pipeline that makes it work.</p>
-      </div>
+      {COPY.map(({ n, label, paragraphs }) => (
+        <div key={n}>
+          <div className="mb-6 sm:mb-12 relative z-1">
+            <KLSectionNumber n={n} label={label} />
+          </div>
+          <div className="mb-8 sm:mb-16 relative z-1 space-y-3 text-lg sm:text-2xl font-sans font-light leading-normal">
+            {paragraphs.map(({ className, content }, i) => (
+              <p key={i} className={className}>
+                {content}
+              </p>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
 
     {/* Right: large image area, edge-to-edge on the right */}

@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ReelFixed, HeroBlock, ReelPinnedSpacer } from './kl/Hero';
 import { FloatingChrome, DrawerMenu, ContactModal } from './kl/Chrome';
 import {
   SectionWhatWeDo,
   SectionHowItWorks,
   SectionForWho,
-  SectionValues,
   SectionWhoWeAre,
   SectionCTA,
 } from './kl/Sections';
@@ -26,6 +25,12 @@ export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const videoUnlockRef = useRef<(() => void) | null>(null);
+
+  const unlock = () => setUnlocked(true);
+  const relock = () => setUnlocked(false);
+  const watchVideo = () => videoUnlockRef.current?.();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.3);
@@ -49,16 +54,25 @@ export default function HomePage() {
 
   return (
     <>
-      <ReelFixed tweaks={TWEAKS} />
+      <ReelFixed
+        tweaks={TWEAKS}
+        unlocked={unlocked}
+        onUnlock={unlock}
+        onRelock={relock}
+        onRegisterUnlock={(fn) => {
+          videoUnlockRef.current = fn;
+        }}
+      />
       <FloatingChrome
         onOpenMenu={() => setMenuOpen(true)}
         onOpenContact={openContact}
         scrolled={scrolled}
         startHidden={true}
+        hidden={unlocked}
       />
 
       <main style={{ position: 'relative' }}>
-        <HeroBlock onContact={openContact} tweaks={TWEAKS} />
+        <HeroBlock onContact={openContact} onUnlock={watchVideo} tweaks={TWEAKS} />
         <ReelPinnedSpacer tweaks={TWEAKS} />
 
         <div className="relative bg-kl-black" style={{ zIndex: 5 }}>

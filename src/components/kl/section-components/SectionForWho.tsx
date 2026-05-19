@@ -28,7 +28,6 @@ const clientTypes = [
 ];
 
 const clients = [
-  'Inrō',
   'ARTE',
   'France Télévisions',
   'Cinétévé',
@@ -36,9 +35,11 @@ const clients = [
   'Ville de Paris',
   'Journées du Patrimoine',
   'ADAGP',
+  'Inrō',
   'LVMH',
   'Nona Source',
   'Kenzo',
+  "L'Oréal",
 ];
 
 export const SectionForWho = () => (
