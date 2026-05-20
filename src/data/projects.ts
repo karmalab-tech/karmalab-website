@@ -25,27 +25,27 @@ export const categories: Category[] = [
     tags: ['Concept', 'Production', 'CGI', 'Post-production'],
     projects: [
       {
-        client: 'ARTE',
-        title: 'Urban Motion',
-        video: 'https://videos.pexels.com/video-files/856973/856973-hd_1920_1080_25fps.mp4',
+        client: 'Failing Forward',
+        title: 'Narrative short film distributed by ARTE - 2024',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/Failing_2.mp4',
         modal: true,
       },
       {
-        client: 'Cinétévé',
-        title: 'Aerial Drift',
-        video: 'https://videos.pexels.com/video-files/1321208/1321208-hd_1920_1080_30fps.mp4',
+        client: 'Moustache',
+        title: 'Spec commercial comedy sketch - 2026',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/Moustache_1.mp4',
         modal: true,
       },
       {
-        client: 'France Télévisions',
-        title: 'Neon Nights',
-        video: 'https://videos.pexels.com/video-files/2278095/2278095-hd_1920_1080_30fps.mp4',
+        client: 'Women in AI',
+        title: 'AI musical short film - 2026',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/Women_1.mp4',
         modal: true,
       },
       {
-        client: 'Canal+',
-        title: 'Fluid Dynamics',
-        video: 'https://videos.pexels.com/video-files/3045163/3045163-hd_1920_1080_25fps.mp4',
+        client: 'Une vie en France',
+        title: 'Short form biopic series produced by Cinétévé for France Télévisions - 2026',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/Kenzo_1.mp4',
         modal: true,
       },
     ],
@@ -58,14 +58,21 @@ export const categories: Category[] = [
     tags: ['Projection mapping', 'Realtime visuals', 'Design'],
     projects: [
       {
-        client: 'Strike Against the Archive @ ADAGP',
-        title: 'Interactive installations',
+        client: 'Strike Against the Archive',
+        title: 'Exhibition at ADAGP - 2025',
         video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/strike.mp4',
         modal: true,
       },
       {
+        client: 'Coup de cœur',
+        title:
+          'Interactive film commission for Bibliothèque Historique de la Ville de Paris - 2018',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/iglou1.mp4',
+        modal: true,
+      },
+      {
         client: 'Sanofi',
-        title: 'Sensorial digital experience',
+        title: 'Installation for Diabetes Awareness - 2017',
         video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/sanofi.mp4',
         modal: true,
       },
@@ -80,18 +87,19 @@ export const categories: Category[] = [
     projects: [
       {
         client: 'Peter Lindbergh',
-        title: 'Design by David Polonia',
+        title: 'Website - Design by David Polonia',
         video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/peter_lindbergh.mp4',
         modal: true,
       },
       {
         client: 'Kenzo',
-        title: 'Design by Kim Boutin',
+        title: 'Website - Design by Kim Boutin',
         video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/kenzo.mp4',
         modal: true,
       },
       {
-        client: 'Madame C - Caroline Ritzler',
+        client: 'Madame C',
+        title: 'Website - Design by Caroline Ritzler',
         video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/madame_c.mp4',
         modal: true,
       },

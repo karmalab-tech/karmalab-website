@@ -159,7 +159,10 @@ export const SectionProjectsGrid = ({ projects }: ProjectsGridProps) => {
   return (
     <>
       <section aria-label="Projects" className="relative bg-kl-black">
-        <div className="grid gap-0.75" style={{ gridTemplateColumns: getGridCols(layout) }}>
+        <div
+          className="grid gap-0.75 [grid-template-columns:1fr] md:[grid-template-columns:var(--grid-cols)]"
+          style={{ '--grid-cols': getGridCols(layout) } as React.CSSProperties}
+        >
           {gridCells.map((cell, i) => {
             const clickable = Boolean(cell?.modal && cell?.video);
             return (
@@ -178,7 +181,7 @@ export const SectionProjectsGrid = ({ projects }: ProjectsGridProps) => {
                       }
                     : undefined
                 }
-                className="relative overflow-hidden outline-none"
+                className={`relative overflow-hidden outline-none${cell === null ? ' hidden md:block' : ''}`}
                 style={{
                   aspectRatio: '16 / 9',
                   background: '#000',
