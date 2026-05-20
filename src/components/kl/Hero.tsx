@@ -63,10 +63,6 @@ export const ReelFixed = ({
       v.muted = false;
       v.play().catch(() => {});
       setPlaying(true);
-      // iOS: enter native fullscreen player in the user-gesture context
-      if ('webkitEnterFullscreen' in v) {
-        (v as any).webkitEnterFullscreen();
-      }
     }
     setVideoSrc(fullSrc);
     setMuted(false);
@@ -219,6 +215,15 @@ export const ReelFixed = ({
   const toggleFullscreen = () => {
     const v = videoRef.current;
     if (!v) return;
+    // iOS Safari uses webkitEnterFullscreen on the video element
+    if ('webkitEnterFullscreen' in v) {
+      if ((v as any).webkitDisplayingFullscreen) {
+        (v as any).webkitExitFullscreen();
+      } else {
+        (v as any).webkitEnterFullscreen();
+      }
+      return;
+    }
     if (!document.fullscreenElement) {
       v.requestFullscreen?.();
     } else {
@@ -269,7 +274,7 @@ export const ReelFixed = ({
           loop={!unlocked}
           muted={muted}
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover portrait:object-contain"
           preload="metadata"
           style={{
             opacity,

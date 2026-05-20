@@ -16,4 +16,7 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
+  server: {
+    allowedHosts: ['f6b1d13c9442.ngrok.app'],
+  },
 });
