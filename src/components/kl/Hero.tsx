@@ -168,6 +168,32 @@ export const ReelFixed = ({
       setPlaying(false);
     }
   };
+
+  // Debounced click so double-click doesn't also toggle play twice
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleVideoAreaClick = () => {
+    if (!unlocked) {
+      handleUnlock();
+      return;
+    }
+    if (clickTimerRef.current) {
+      clearTimeout(clickTimerRef.current);
+      clickTimerRef.current = null;
+      return;
+    }
+    clickTimerRef.current = setTimeout(() => {
+      clickTimerRef.current = null;
+      togglePlay();
+    }, 250);
+  };
+  const handleVideoAreaDblClick = () => {
+    if (!unlocked) return;
+    if (clickTimerRef.current) {
+      clearTimeout(clickTimerRef.current);
+      clickTimerRef.current = null;
+    }
+    toggleFullscreen();
+  };
   const toggleFullscreen = () => {
     const v = videoRef.current;
     if (!v) return;
@@ -246,17 +272,18 @@ export const ReelFixed = ({
         )}
       </div>
 
-      {/* Watch video overlay — visible until unlocked */}
+      {/* Watch video overlay — visible until unlocked; click-to-play/pause when unlocked */}
       <div
         className="fixed inset-0 flex items-center justify-center"
         style={{
           zIndex: 1,
-          pointerEvents: !unlocked && scrollControlsOpacity > 0.1 ? 'auto' : 'none',
-          cursor: !unlocked && scrollControlsOpacity > 0.1 ? 'pointer' : 'default',
+          pointerEvents: unlocked || scrollControlsOpacity > 0.1 ? 'auto' : 'none',
+          cursor: 'pointer',
           opacity: unlocked ? 0 : scrollControlsOpacity,
           transition: 'opacity 500ms ease',
         }}
-        onClick={handleUnlock}
+        onClick={handleVideoAreaClick}
+        onDoubleClick={handleVideoAreaDblClick}
       >
         <KLButton
           variant="primary"
