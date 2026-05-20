@@ -20,8 +20,8 @@ export const categories: Category[] = [
   {
     slug: 'films-and-commercials',
     n: '01',
-    label: 'Films & commercials',
-    copy: 'Ideas brought to screen through film, motion, and visual storytelling.',
+    label: 'Films & Commercials',
+    copy: 'Narrative and documentary projects for cinema, television, web, and social platforms.',
     tags: ['Concept', 'Production', 'CGI', 'Post-production'],
     projects: [
       {
@@ -51,11 +51,11 @@ export const categories: Category[] = [
     ],
   },
   {
-    slug: 'interactive-installations',
+    slug: 'interactive-experiences',
     n: '02',
-    label: 'Interactive installations',
-    copy: 'Spaces that react, transform, and invite people to participate.',
-    tags: ['Projection mapping', 'Interactive displays', 'Scenography'],
+    label: 'Interactive Experiences',
+    copy: 'For exhibitions, public spaces, and events combining visuals, interaction, and spatial design.',
+    tags: ['Projection mapping', 'Realtime visuals', 'Design'],
     projects: [
       {
         client: 'Strike Against the Archive @ ADAGP',
@@ -72,10 +72,10 @@ export const categories: Category[] = [
     ],
   },
   {
-    slug: 'digital-experiences',
+    slug: 'digital-interfaces',
     n: '03',
-    label: 'Digital experiences',
-    copy: 'Online experiences designed to be explored, played with, and shared.',
+    label: 'Digital Interfaces',
+    copy: 'Online experiences designed to be accessible and playful.',
     tags: ['Websites', 'Mobile apps', 'Workflow automation'],
     projects: [
       {
@@ -91,6 +91,7 @@ export const categories: Category[] = [
         modal: true,
       },
       {
+        client: 'Madame C - Caroline Ritzler',
         video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/madame_c.mp4',
         modal: true,
       },

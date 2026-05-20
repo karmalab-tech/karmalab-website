@@ -40,7 +40,7 @@ export const FloatingChrome = ({
         </KLIconButton>
       </div>
       <div className="pointer-events-auto">
-        <KLButton size="sm" accent="pink" onClick={onOpenContact}>
+        <KLButton size="sm" accent="lime" onClick={onOpenContact}>
           Contact us
         </KLButton>
       </div>

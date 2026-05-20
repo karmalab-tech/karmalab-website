@@ -59,18 +59,20 @@ const COPY: {
         className: 'text-kl-bone pr-28 sm:pr-0',
         content: (
           <>
-            Most projects start from{' '}
-            <span className="text-kl-pink">tools instead of structure</span>.
+            Most projects start from tools{' '}
+            <span className="text-kl-pink">instead of structure.</span>
           </>
         ),
       },
       {
-        className: 'text-kl-bone pr-16 sm:pr-0',
-        content: <>So things move fast but they don't always hold.</>,
+        className: 'text-kl-fog pr-16 sm:pr-0',
+        content: <>So production moves fast, but the pipeline breaks halfway through.</>,
       },
       {
         className: 'text-kl-fog',
-        content: <>It all comes down to how you build it.</>,
+        content: (
+          <>Budget, quality, timeline, team: everything depends on how the system is built.</>
+        ),
       },
     ],
   },
@@ -82,18 +84,29 @@ const COPY: {
         className: 'text-kl-bone',
         content: (
           <>
-            You come to us when something needs to take shape. <br />
-            <span className="text-kl-pink">With just an idea.</span>
+            <span className="text-kl-pink">You come to us with an idea.</span>
+            <br />A film, a campaign, an exhibition, or a digital product.
           </>
         ),
       },
       {
         className: 'text-kl-fog',
-        content: <>We design the hybrid pipeline that makes it work.</>,
+        content: (
+          <>
+            We design the production pipeline around your goals using our expertise in film, CGI,
+            AI, code, and post-production.
+          </>
+        ),
       },
       {
         className: 'text-kl-fog',
-        content: <>And you get to keep it.</>,
+        content: (
+          <>We give you different ways to build it depending on scale, complexity, and budget.</>
+        ),
+      },
+      {
+        className: 'text-kl-fog',
+        content: <>The pipeline stays yours whether or not you produce it with us.</>,
       },
     ],
   },
@@ -128,7 +141,7 @@ export const SectionWhatWeDo = () => (
           <div className="mb-6 sm:mb-12 relative z-1">
             <KLSectionNumber n={n} label={label} />
           </div>
-          <div className="mb-8 sm:mb-16 relative z-1 space-y-3 text-lg sm:text-2xl font-sans font-light leading-normal">
+          <div className="mb-8 sm:mb-16 relative z-1 space-y-3 text-lg sm:text-xl font-sans font-light leading-normal">
             {paragraphs.map(({ className, content }, i) => (
               <p key={i} className={className}>
                 {content}

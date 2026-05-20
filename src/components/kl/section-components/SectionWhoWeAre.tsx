@@ -45,8 +45,9 @@ export const SectionWhoWeAre = () => (
           teaching how technology is built and shapes systems.
         </p>
         <p className="font-sans font-light text-xl text-kl-bone leading-[1.55] max-w-[640px] m-0 mb-7">
-          She joined hands with <span className="text-kl-pink">Pierre de Milly</span>, a software
-          engineer and serial entrepreneur with a knack for creating meaningful digital experiences.
+          She joined forces with <span className="text-kl-pink">Pierre de Milly</span>, a software
+          engineer and a serial entrepreneur with a knack for building meaningful digital
+          experiences.
         </p>
         <p className="font-sans font-light text-xl text-kl-bone leading-[1.55] max-w-[640px] mb-7">
           <span className="text-kl-pink">KarmaLab</span> turns our ideas into a working structure.
@@ -61,7 +62,7 @@ export const SectionWhoWeAre = () => (
             href="https://www.arte.tv/fr/videos/133035-000-A/rencontre-avec-rony-efrat/"
             target="_blank"
           >
-            Watch the interview <IconArrowUpRight size={14} />
+            Watch an interview <IconArrowUpRight size={14} />
           </KLButton>
         </div>
       </div>

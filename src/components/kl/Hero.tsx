@@ -107,7 +107,15 @@ export const ReelFixed = ({
     return () => v.removeEventListener('ended', onEnded);
   }, [unlocked]);
 
-  // Volume follows scroll position when unlocked
+  // Track whether the video has been audible at least once since unlocking
+  const wasAudibleRef = useRef(false);
+  useEffect(() => {
+    if (!unlocked) {
+      wasAudibleRef.current = false;
+    }
+  }, [unlocked]);
+
+  // Volume follows scroll position when unlocked; relock when it fades to 0 after being audible
   useEffect(() => {
     if (!unlocked) return;
     const v = videoRef.current;
@@ -118,6 +126,20 @@ export const ReelFixed = ({
           Math.min(1, Math.max(0, (1.88 - progress) / 0.16))
         : 0;
     v.volume = vol;
+    if (vol > 0) {
+      wasAudibleRef.current = true;
+    } else if (wasAudibleRef.current) {
+      // Volume just hit 0 after being audible — relock
+      wasAudibleRef.current = false;
+      v.src = REEL_PREVIEW_SRC;
+      v.muted = true;
+      v.load();
+      v.play().catch(() => {});
+      setVideoSrc(REEL_PREVIEW_SRC);
+      setMuted(true);
+      setPlaying(true);
+      onRelockRef.current?.();
+    }
   }, [unlocked, progress]);
 
   useEffect(() => {

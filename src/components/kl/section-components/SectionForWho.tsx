@@ -6,23 +6,23 @@ import { sectionWrapClass } from './shared';
 
 const clientTypes = [
   {
-    label: 'Production companies',
-    desc: 'Looking to integrate new tools without compromising their quality or production standards.',
+    label: 'Production Companies',
+    desc: 'Integrating new technologies without lowering production standards.',
     image: '/assets/production_companies.png',
   },
   {
-    label: 'Cultural institutions',
-    desc: 'Seeking meaningful, well-designed technological experiences, not superficial effects.',
+    label: 'Cultural Institutions',
+    desc: 'Building immersive experiences with meaning, not just effects.',
     image: '/assets/cultural_institutions.png',
   },
   {
     label: 'Brands',
-    desc: 'Developing ambitious projects that remain human, crafted, and intentional — amplified by technology.',
+    desc: 'Creating ambitious projects that remain human, intentional, and well crafted.',
     image: '/assets/brands.png',
   },
   {
-    label: 'Artists and creators',
-    desc: 'Who want to build their projects with structure, clarity, and the right production approach.',
+    label: 'Artists and Creators',
+    desc: 'Looking for structure, clarity, and ways to execute their vision.',
     image: '/assets/artists.png',
   },
 ];
@@ -61,7 +61,7 @@ export const SectionForWho = () => (
               <div className="font-sans font-normal text-[26px] tracking-[-0.02em] text-kl-bone leading-[1.15]">
                 {ct.label}
               </div>
-              <p className="mt-3.5 mb-0 text-kl-fog text-base leading-[1.55] max-w-[480px]">
+              <p className="mt-3.5 mb-0 text-kl-fog text-lg leading-[1.55] max-w-[480px]">
                 {ct.desc}
               </p>
             </div>
@@ -77,7 +77,7 @@ export const SectionForWho = () => (
                 {ct.label}
               </div>
             </div>
-            <p className="mt-3.5 mb-0 text-kl-fog text-base leading-[1.55] px-5">{ct.desc}</p>
+            <p className="mt-3 mb-0 text-kl-fog text-base leading-[1.55] px-5">{ct.desc}</p>
           </div>
         </KLBorderedCell>
       ))}

@@ -17,10 +17,10 @@ interface DrawerMenuProps {
 
 const DRAWER_LINKS: DrawerMenuLink[] = [
   { href: '/', id: 'what-we-do', n: '01', label: 'What we do' },
-  { href: '/projects', n: '02', label: 'Projects' },
-  { href: '/', id: 'clients', n: '03', label: 'Clients' },
-  { href: '/', id: 'who-we-are', n: '04', label: 'Who we are' },
-  { href: '/', id: 'cta', n: '05', label: 'Contact us' },
+  { href: '/', id: 'who-we-are', n: '02', label: 'Who we are' },
+  { href: '/projects', n: '03', label: 'Projects' },
+  { href: '/', id: 'clients', n: '04', label: 'Clients' },
+  { href: '/', id: 'cta', n: '05', label: 'Contact' },
 ];
 
 function handleNavClick(e: React.MouseEvent, link: DrawerMenuLink, onClose: () => void) {

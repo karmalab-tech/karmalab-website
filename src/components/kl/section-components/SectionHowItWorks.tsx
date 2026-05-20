@@ -57,15 +57,18 @@ const phases = [
   {
     n: '01',
     label: 'Pipeline design',
-    lead: 'You come with something vague or partial.',
-    lines: ['You leave with clarity.', 'You can also stay and build it with us.'],
+    lead: 'You come with an idea, we design the hybrid pipeline behind it.',
+    lines: [
+      'The right structure, tools, and budget logic.',
+      'You leave with clarity, or build it with us.',
+    ],
     link: undefined as { label: string; href: string } | undefined,
   },
   {
     n: '02',
     label: 'Production',
-    lead: 'Then we build it together.',
-    lines: ['We assemble the team.', 'We direct the process.'],
+    lead: 'If you stay, we build it together.',
+    lines: ['We assemble the team, direct the process, and keep the whole thing coherent.'],
     link: {
       label: 'Our projects',
       href: '/projects',
@@ -74,10 +77,10 @@ const phases = [
   {
     n: '03',
     label: 'Technology',
-    lead: 'We design with transparency and the right tool for the job.',
+    lead: 'We work across emerging technologies. Including AI.',
     lines: [
-      'What matters for us is to show you how it works.',
-      'This knowledge is part of the process.',
+      'We explain how it works, what it produces, and what it removes.',
+      'Technology is not neutral, and neither is what you build with it.',
     ],
     link: undefined as { label: string; href: string } | undefined,
   },
