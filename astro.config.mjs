@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://wintermute-consulting.github.io/karmalab-staging',
+  site: 'https://www.karmalab.tech',
   base: '/',
   integrations: [react()],
   vite: {
