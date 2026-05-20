@@ -13,30 +13,15 @@ export const SectionWhoWeAre = () => (
       <KLSectionNumber n="05" label="Who we are" />
     </div>
 
-    {/* <div className="grid items-start grid-cols-[340px_1fr] gap-16 max-md:grid-cols-1 max-md:gap-10"> */}
-    <div>
+    <div className="grid items-center grid-cols-[540px_1fr] gap-16 max-md:grid-cols-1 max-md:gap-10">
       {/* Portrait placeholder */}
-      {/* <div
-        className="w-full aspect-3/4 rounded-md overflow-hidden relative border border-white/8 max-md:w-[min(200px,50vw)] max-md:mx-auto"
-        style={{
-          background:
-            'linear-gradient(135deg, hsl(320 30% 18%) 0%, hsl(320 20% 8%) 60%, #000 100%)',
-        }}
-      >
-        <div
-          className="absolute inset-0 mix-blend-overlay opacity-35"
-          style={{ backgroundImage: `url("data:image/svg+xml;utf8,${portraitNoiseSvg}")` }}
+      <div className="w-full aspect-square  overflow-hidden relative max-md:w-[min(280px,70vw)] max-md:mx-auto">
+        <img
+          src="/assets/pierrony_alpha.png"
+          alt="Rony Efrat and Pierre de Milly"
+          className="w-full h-full object-contain"
         />
-        <div className="absolute left-3.5 top-3.5 font-mono text-[10px] tracking-[0.12em] uppercase text-kl-ash">
-          portrait / placeholder
-        </div>
-        <div className="absolute left-3.5 bottom-3.5 right-3.5">
-          <div className="font-sans font-normal text-[17px] text-kl-bone tracking-[-0.01em]">
-            Rony Efrat
-          </div>
-          <div className="text-kl-ash text-xs mt-0.5">Founder</div>
-        </div>
-      </div> */}
+      </div>
 
       {/* Bio text */}
       <div>

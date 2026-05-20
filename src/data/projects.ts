@@ -67,7 +67,7 @@ export const categories: Category[] = [
         client: 'Coup de cœur',
         title:
           'Interactive film commission for Bibliothèque Historique de la Ville de Paris - 2018',
-        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/iglou1.mp4',
+        video: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/iglou_1.mp4',
         modal: true,
       },
       {
