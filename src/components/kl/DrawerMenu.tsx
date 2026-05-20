@@ -131,7 +131,7 @@ export const DrawerMenu = ({ open, onClose, onOpenContact }: DrawerMenuProps) =>
       <img
         src={`${import.meta.env.BASE_URL}assets/menu_shape.png`}
         alt=""
-        className="absolute bottom-0 right-0 pointer-events-none block h-auto"
+        className="absolute bottom-0 right-0 pointer-events-none block h-auto max-sm:hidden"
         style={{ width: 'clamp(120px, 60%, 260px)' }}
       />
     </aside>

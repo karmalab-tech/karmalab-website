@@ -13,9 +13,10 @@ export const SectionWhoWeAre = () => (
       <KLSectionNumber n="05" label="Who we are" />
     </div>
 
-    <div className="grid items-start grid-cols-[340px_1fr] gap-16 max-md:grid-cols-1 max-md:gap-10">
+    {/* <div className="grid items-start grid-cols-[340px_1fr] gap-16 max-md:grid-cols-1 max-md:gap-10"> */}
+    <div>
       {/* Portrait placeholder */}
-      <div
+      {/* <div
         className="w-full aspect-3/4 rounded-md overflow-hidden relative border border-white/8 max-md:w-[min(200px,50vw)] max-md:mx-auto"
         style={{
           background:
@@ -35,7 +36,7 @@ export const SectionWhoWeAre = () => (
           </div>
           <div className="text-kl-ash text-xs mt-0.5">Founder</div>
         </div>
-      </div>
+      </div> */}
 
       {/* Bio text */}
       <div>

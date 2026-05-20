@@ -274,7 +274,7 @@ export const ReelFixed = ({
           loop={!unlocked}
           muted={muted}
           playsInline
-          className="absolute inset-0 w-full h-full object-cover portrait:object-contain"
+          className={`absolute inset-0 w-full h-full object-cover${unlocked ? ' portrait:object-contain' : ''}`}
           preload="metadata"
           style={{
             opacity,
@@ -405,7 +405,7 @@ export const HeroBlock = ({ onContact, onUnlock, tweaks }: HeroBlockProps) => {
         }}
       >
         {/* Left: logo */}
-        <div className="flex items-center justify-center max-md:w-[min(220px,60vw)] max-md:aspect-square max-md:mt-4">
+        <div className="flex items-center justify-center max-md:w-[80vw] max-md:aspect-square max-md:mt-4">
           <img
             src={`${import.meta.env.BASE_URL}uploads/chrome_logo_transparent.png`}
             alt="KarmaLab"
