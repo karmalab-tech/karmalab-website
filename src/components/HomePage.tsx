@@ -50,7 +50,12 @@ export default function HomePage() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const openContact = () => setContactOpen(true);
+  const openContact = () => {
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'click_contact');
+    }
+    setContactOpen(true);
+  };
 
   return (
     <>

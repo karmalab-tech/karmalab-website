@@ -34,7 +34,12 @@ export const SectionCTA = ({ onContact }: SectionCTAProps) => (
           <KLButton
             variant="text"
             size="md"
-            onClick={() => window.open('https://instagram.com/karmalab.tech', '_blank')}
+            onClick={() => {
+              if (typeof (window as any).gtag === 'function') {
+                (window as any).gtag('event', 'click_instagram');
+              }
+              window.open('https://instagram.com/karmalab.tech', '_blank');
+            }}
           >
             or follow us on Instagram <IconArrowRight size={14} />
           </KLButton>

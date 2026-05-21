@@ -53,6 +53,11 @@ export const ContactModal = ({ open, onClose }: ContactModalProps) => {
               href={c.href}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                if (c.label === 'Instagram' && typeof (window as any).gtag === 'function') {
+                  (window as any).gtag('event', 'click_instagram');
+                }
+              }}
               className="flex justify-between items-center py-5.5 border-t border-white/8 no-underline text-kl-lime cursor-pointer gap-3 transition-colors duration-180"
               style={{
                 borderBottom: i === CONTACTS.length - 1 ? '1px solid var(--border-1)' : 'none',
