@@ -87,8 +87,8 @@ export default function HomePage() {
           <SectionForWho />
           {/* <SectionValues /> */}
           <SectionWhoWeAre />
-          <SectionOpenSource />
           <SectionCTA onContact={openContact} />
+          <SectionOpenSource />
         </div>
       </main>
 
