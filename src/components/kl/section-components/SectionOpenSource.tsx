@@ -46,7 +46,7 @@ export const SectionOpenSource = () => (
       </div>
 
       <div className="w-full max-md:w-[min(320px,80vw)] max-md:mx-auto">
-        <img src="/assets/dog.png" alt="" className="w-full h-auto block" />
+        <img src="/assets/dog_octocat_transparent.png" alt="" className="w-full h-auto block" />
       </div>
     </div>
   </section>
