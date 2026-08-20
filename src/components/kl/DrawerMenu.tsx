@@ -21,6 +21,7 @@ const DRAWER_LINKS: DrawerMenuLink[] = [
   { href: '/projects', n: '03', label: 'Projects' },
   { href: '/', id: 'clients', n: '04', label: 'Clients' },
   { href: '/', id: 'cta', n: '05', label: 'Contact' },
+  { href: '/', id: 'open-source', n: '06', label: 'Open Source' },
 ];
 
 function handleNavClick(e: React.MouseEvent, link: DrawerMenuLink, onClose: () => void) {
