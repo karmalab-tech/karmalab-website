@@ -7,5 +7,6 @@ export {
   SectionForWho,
   SectionValues,
   SectionWhoWeAre,
+  SectionOpenSource,
   SectionCTA,
 } from './section-components';

@@ -4,4 +4,5 @@ export { SectionHowItWorks } from './SectionHowItWorks';
 export { SectionForWho } from './SectionForWho';
 export { SectionValues } from './SectionValues';
 export { SectionWhoWeAre } from './SectionWhoWeAre';
+export { SectionOpenSource } from './SectionOpenSource';
 export { SectionCTA } from './SectionCTA';
