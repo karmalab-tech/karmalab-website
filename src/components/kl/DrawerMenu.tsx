@@ -117,14 +117,8 @@ export const DrawerMenu = ({ open, onClose, onOpenContact }: DrawerMenuProps) =>
       </div>
 
       <div className="pt-6 shrink-0 relative z-1">
-        <KLButton
-          size="lg"
-          onClick={() => {
-            onClose();
-            onOpenContact();
-          }}
-        >
-          Start a project <IconArrowUpRight size={16} />
+        <KLButton size="sm" href="https://github.com/karmalab-tech" target="_blank">
+          github.com/karmalab-tech <IconArrowUpRight size={16} />
         </KLButton>
       </div>
 

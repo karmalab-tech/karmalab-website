@@ -6,6 +6,7 @@ import {
   SectionHowItWorks,
   SectionForWho,
   SectionWhoWeAre,
+  SectionOpenSource,
   SectionCTA,
 } from './kl/Sections';
 
@@ -87,6 +88,7 @@ export default function HomePage() {
           {/* <SectionValues /> */}
           <SectionWhoWeAre />
           <SectionCTA onContact={openContact} />
+          <SectionOpenSource />
         </div>
       </main>
 

@@ -28,7 +28,7 @@ export const SectionCTA = ({ onContact }: SectionCTAProps) => (
         </div>
 
         <div className="mt-16 flex gap-4 items-center flex-wrap max-md:flex-col max-md:items-center max-md:gap-2.5">
-          <KLButton size="lg" onClick={onContact}>
+          <KLButton size="md" onClick={onContact}>
             Contact us <IconArrowUpRight size={16} />
           </KLButton>
           <KLButton
