@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import type { Project } from '../../../data/projects';
 import { KLIconButton } from '../KLIconButton';
 import { IconClose } from '../Icons';
+import { useVideoQuality, resolveVideoSrc } from '../../../lib/videoQuality';
 
 interface ProjectsGridProps {
   projects: Project[];
@@ -58,13 +59,16 @@ function getGridCols(layout: GridLayout): string {
 }
 
 interface VideoModalProps {
-  src: string | null;
+  video: Project['video'] | null;
   client: string | null;
   title: string | null;
   onClose: () => void;
 }
 
-const VideoModal = ({ src, client, title, onClose }: VideoModalProps) => {
+const VideoModal = ({ video, client, title, onClose }: VideoModalProps) => {
+  const quality = useVideoQuality();
+  const src = video ? resolveVideoSrc(video, quality) : null;
+
   useEffect(() => {
     if (!src) return;
     const onKey = (e: KeyboardEvent) => {
@@ -148,6 +152,62 @@ const VideoModal = ({ src, client, title, onClose }: VideoModalProps) => {
   );
 };
 
+/**
+ * Grid-cell background video. Stays unmounted (nothing fetched) until it scrolls near
+ * the viewport, then loads the encode matching the current network quality and
+ * plays/pauses as it enters/leaves view — so a page with a dozen clips never
+ * downloads more than what's actually on (or about to be on) screen.
+ */
+const LazyGridVideo = ({ video }: { video: Project['video'] }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hasEntered, setHasEntered] = useState(false);
+  const [inView, setInView] = useState(false);
+  const quality = useVideoQuality();
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      setHasEntered(true);
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+        if (entry.isIntersecting) setHasEntered(true);
+      },
+      { rootMargin: '300px 0px', threshold: 0.01 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (inView) el.play().catch(() => {});
+    else el.pause();
+  }, [inView, hasEntered]);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0">
+      {hasEntered && (
+        <video
+          ref={videoRef}
+          src={resolveVideoSrc(video, quality)}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover block pointer-events-none"
+        />
+      )}
+    </div>
+  );
+};
+
 export const SectionProjectsGrid = ({ projects }: ProjectsGridProps) => {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
@@ -204,16 +264,7 @@ export const SectionProjectsGrid = ({ projects }: ProjectsGridProps) => {
                   (e.currentTarget as HTMLElement).style.outline = 'none';
                 }}
               >
-                {cell?.video && (
-                  <video
-                    src={cell.video}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover block pointer-events-none"
-                  />
-                )}
+                {cell?.video && <LazyGridVideo video={cell.video} />}
               </div>
             );
           })}
@@ -221,7 +272,7 @@ export const SectionProjectsGrid = ({ projects }: ProjectsGridProps) => {
       </section>
 
       <VideoModal
-        src={activeVideo}
+        video={activeVideo}
         client={activeProject?.client ?? null}
         title={activeProject?.title ?? ''}
         onClose={() => setActiveProject(null)}

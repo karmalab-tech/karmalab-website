@@ -164,6 +164,43 @@ In `src/components/kl/Hero.tsx`, update `REEL_SRC`:
 const REEL_SRC = 'https://...'; // or a local /uploads/ path
 ```
 
+### Add network-adaptive video variants to the projects grid
+
+Grid videos in `src/data/projects.ts` load lazily (nothing is fetched until a cell
+scrolls near the viewport — see `LazyGridVideo` in `SectionProjectsGrid.tsx`) and
+adapt to the viewer's connection via the Network Information API
+(`src/lib/videoQuality.ts`). By default `video` is just a URL string, which is used
+for every connection speed. To serve a lighter encode on slow/metered connections,
+give it a `{ high, low }` pair instead:
+
+```ts
+{
+  client: 'Client Name',
+  title: 'Project title',
+  video: {
+    high: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/project.mp4',
+    low: 'https://karmalab-cdn.s3.us-east-1.amazonaws.com/project_low.mp4',
+  },
+  modal: true,
+}
+```
+
+`low` is selected when the browser reports Data Saver mode, a `2g`/`3g`/`slow-2g`
+`effectiveType`, or a measured downlink under ~1.5 Mbps; it falls back to `high`
+when the API is unsupported (notably Safari/iOS), since lazy-loading already keeps
+those viewers from downloading videos they never scroll to.
+
+To generate a `low` encode from an existing master with `ffmpeg` (480p, ~800kbps,
+no audio track since grid videos are muted anyway):
+
+```bash
+ffmpeg -i project.mp4 -vf "scale=-2:480" -c:v libx264 -b:v 800k -maxrate 900k \
+  -bufsize 1600k -preset slow -an -movflags +faststart project_low.mp4
+```
+
+Upload the result next to the original in the CDN bucket and reference both URLs
+as shown above.
+
 ---
 
 ## Pages & routing

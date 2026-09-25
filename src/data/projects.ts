@@ -1,8 +1,22 @@
+/**
+ * Multiple encodes of the same clip, so playback can adapt to the viewer's network.
+ * `high` is the existing full-quality master; `low` should be a heavily compressed,
+ * lower-resolution encode (e.g. 480p, ~800kbps) of the same clip for slow connections
+ * or Data Saver mode. See AGENTS.md for the ffmpeg command used to generate `low`.
+ */
+export interface VideoSources {
+  high: string;
+  low: string;
+}
+
 export interface Project {
   client?: string;
   title?: string;
-  /** Path or URL to an MP4 for the projects grid. If omitted the cell renders empty (black). */
-  video: string;
+  /**
+   * Path or URL to an MP4 for the projects grid, or a `{ high, low }` pair for
+   * network-adaptive loading. If omitted the cell renders empty (black).
+   */
+  video: string | VideoSources;
   /** When true, clicking the cell opens the video in a fullscreen modal. */
   modal?: boolean;
 }
